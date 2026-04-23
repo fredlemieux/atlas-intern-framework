@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATLAS — AI Intern Framework</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #0f172a;
+    --panel:   #1e3a5f;
+    --accent:  #3b82f6;
+    --text:    #bfdbfe;
+    --muted:   #64748b;
+    --success: #22c55e;
+    --danger:  #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+  code, .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* Deck */
+  #deck { width: 100vw; height: 100vh; position: relative; }
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 3rem;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 300ms ease, transform 300ms ease;
+    pointer-events: none;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+  .slide-inner {
+    max-width: 900px;
+    width: 100%;
+  }
+
+  /* Counter */
+  #counter {
+    position: fixed;
+    top: 1.2rem;
+    right: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    z-index: 100;
+  }
+
+  /* Nav buttons */
+  .nav-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--muted);
+    border-radius: 6px;
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 200ms;
+    z-index: 100;
+    font-family: 'Inter', sans-serif;
+  }
+  .nav-btn:hover { background: var(--accent); border-color: var(--accent); }
+  #prev-btn { left: 1.5rem; }
+  #next-btn { right: 1.5rem; }
+
+  /* Dots */
+  #dots {
+    position: fixed;
+    bottom: 1.8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 100;
+  }
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--muted);
+    cursor: pointer;
+    transition: background 200ms;
+  }
+  .dot.active { background: var(--accent); }
+
+  /* Typography */
+  h1 { font-size: 3rem; font-weight: 700; line-height: 1.1; margin-bottom: 0.8rem; }
+  h2 { font-size: 1.8rem; font-weight: 600; margin-bottom: 1rem; }
+  h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--accent); }
+  p { line-height: 1.65; margin-bottom: 0.7rem; }
+  .muted { color: var(--muted); font-size: 0.85rem; font-weight: 300; }
+  .accent { color: var(--accent); }
+  .success { color: var(--success); }
+  .danger { color: var(--danger); }
+
+  /* Title slide */
+  .slide-title { text-align: center; }
+  .slide-title h1 { color: var(--text); }
+  .slide-title .subtitle {
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .slide-title .tagline {
+    display: inline-block;
+    background: var(--panel);
+    border-left: 4px solid var(--accent);
+    padding: 0.8rem 1.4rem;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--text);
+  }
+
+  /* Section header */
+  .slide-section { text-align: center; }
+  .slide-section .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .slide-section h2 { font-size: 2.2rem; }
+  .slide-section .section-desc { font-size: 1rem; color: var(--muted); margin-top: 0.8rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+  /* Card grid */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.2rem;
+  }
+  .card {
+    background: var(--panel);
+    border-left: 3px solid var(--accent);
+    padding: 1.2rem;
+    border-radius: 0 8px 8px 0;
+  }
+  .card.danger-border { border-left-color: var(--danger); }
+  .card.success-border { border-left-color: var(--success); }
+  .card h3 { margin-bottom: 0.4rem; font-size: 1rem; }
+  .card p { font-size: 0.92rem; color: var(--text); margin: 0; line-height: 1.5; }
+
+  /* Callout */
+  .callout {
+    background: var(--panel);
+    border-left: 4px solid var(--accent);
+    padding: 1rem 1.4rem;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    margin: 1rem 0;
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+  }
+  th {
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    background: var(--panel);
+    color: var(--accent);
+    font-weight: 600;
+    border-bottom: 1px solid var(--muted);
+  }
+  td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid rgba(100,116,139,0.2);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:last-child td { border-bottom: none; }
+
+  /* Comparison */
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 0;
+    margin-top: 1rem;
+  }
+  .comp-col { padding: 1rem; }
+  .comp-divider { background: var(--muted); }
+  .comp-col h3 { font-size: 1rem; margin-bottom: 0.8rem; }
+  .comp-col ul { list-style: none; }
+  .comp-col ul li { padding: 0.35rem 0; font-size: 0.92rem; line-height: 1.45; }
+  .comp-col ul li::before { content: "→ "; color: var(--accent); }
+
+  /* Code block */
+  .code-block {
+    background: var(--panel);
+    border: 1px solid rgba(100,116,139,0.3);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin: 0.8rem 0;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  /* Pill tags */
+  .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+  .pill {
+    background: var(--panel);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Flywheel steps */
+  .flywheel { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.8rem; }
+  .flywheel-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: var(--panel);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+  }
+  .flywheel-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1rem;
+    min-width: 1.5rem;
+  }
+  .flywheel-text { font-size: 0.92rem; line-height: 1.5; }
+
+  /* ROI */
+  .roi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+  .roi-box { background: var(--panel); border-radius: 8px; padding: 1.2rem; }
+  .roi-box h3 { margin-bottom: 0.6rem; font-size: 0.95rem; }
+  .roi-box ul { list-style: none; }
+  .roi-box ul li { font-size: 0.88rem; padding: 0.2rem 0; }
+  .roi-box ul li::before { content: "• "; color: var(--accent); }
+  .roi-box.cost-box { border-top: 3px solid var(--danger); }
+  .roi-box.return-box { border-top: 3px solid var(--success); }
+
+  /* Summary */
+  .summary-list { margin-top: 1rem; }
+  .summary-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(100,116,139,0.15);
+  }
+  .summary-item:last-child { border-bottom: none; }
+  .summary-icon { font-size: 1.1rem; min-width: 1.5rem; }
+  .summary-text { font-size: 0.95rem; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<div id="counter">1 / 12</div>
+
+<div id="deck">
+
+  <!-- Slide 1: Title -->
+  <section class="slide slide-title active">
+    <div class="slide-inner">
+      <div class="muted mono" style="margin-bottom:0.8rem; letter-spacing:0.08em;">AI INTERN MANAGEMENT FRAMEWORK</div>
+      <h1>ATLAS</h1>
+      <div class="subtitle">AI Team Learning and Accountability System</div>
+      <div class="tagline">
+        Stop watching knowledge walk out the door. Start building a team that compounds.
+      </div>
+      <div class="pills" style="justify-content:center; margin-top: 1.8rem;">
+        <span class="pill">Obsidian Vault</span>
+        <span class="pill">CRISPY Methodology</span>
+        <span class="pill">Git Oversight</span>
+        <span class="pill">Skill Development</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 2: Three Failure Modes -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>The Problem: Three Failure Modes</h2>
+      <p class="muted">Interns + Claude Code without structure → all three hit simultaneously</p>
+      <div class="card-grid" style="margin-top:1.2rem;">
+        <div class="card danger-border">
+          <h3 class="danger">The Chaos Problem</h3>
+          <p>No framework → no consistency. Prompting wildly, reinventing the wheel, code ranging from brilliant to broken with no way to tell which is which.</p>
+        </div>
+        <div class="card danger-border">
+          <h3 class="danger">The Visibility Problem</h3>
+          <p>Managers have no idea what's happening. Wrong direction at day 3 gets caught at week 6 — if at all.</p>
+        </div>
+        <div class="card danger-border">
+          <h3 class="danger">The Knowledge Drain</h3>
+          <p>When interns leave, everything leaves with them. Research, patterns, dead ends, context. Next cohort starts at zero.</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:1.2rem;">
+        AI tools amplify human behaviour — without structure, they amplify chaos just as readily as they amplify capability.
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 3: Framework Overview -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>The ATLAS Framework</h2>
+      <p class="muted">Four interlocking components — each one solves a failure mode</p>
+      <div class="card-grid" style="margin-top:1.2rem; grid-template-columns: repeat(2, 1fr);">
+        <div class="card">
+          <h3>01 — Knowledge Vault</h3>
+          <p>Shared Obsidian repo, Git-backed. Per-person folders + shared research layer. Solves: knowledge drain.</p>
+        </div>
+        <div class="card">
+          <h3>02 — CRISPY Method</h3>
+          <p>Structured problem-solving before touching code. Clarify → Research → Identify → Structure → Produce → Yield. Solves: chaos.</p>
+        </div>
+        <div class="card">
+          <h3>03 — Oversight Layer</h3>
+          <p>Git as ground truth. Daily pushes, weekly review, PR as learning moment. Solves: visibility.</p>
+        </div>
+        <div class="card">
+          <h3>04 — Skill Development</h3>
+          <p>AI foundations week 1. Prompting standards. AI hygiene. Knowledge contribution social contract. Solves: all three.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 4: Knowledge Vault -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Component 1: Shared Knowledge Vault</h2>
+      <div style="display:grid; grid-template-columns: 1.1fr 1fr; gap: 1.5rem; margin-top: 0.8rem; align-items:start;">
+        <div>
+          <div class="code-block">/InternVault/
+├── Interns/
+│   ├── Francisco/
+│   │   ├── Sessions/   ← daily logs
+│   │   ├── Research/   ← topic notes
+│   │   └── Scratchpad/ ← dead ends
+│   └── Maria/
+├── Shared/
+│   ├── Research/       ← validated finds
+│   ├── Patterns/       ← reusable solutions
+│   └── Decisions/      ← architecture log
+└── Company/
+    ├── Standards/
+    └── Onboarding/</div>
+        </div>
+        <div>
+          <h3>Why Obsidian?</h3>
+          <ul style="list-style:none; font-size:0.92rem;">
+            <li style="padding:0.3rem 0;"><span class="accent">→</span> Wikilinks make cross-referencing effortless</li>
+            <li style="padding:0.3rem 0;"><span class="accent">→</span> Git-backed — full history, diffs, blame</li>
+            <li style="padding:0.3rem 0;"><span class="accent">→</span> Graph view reveals knowledge clusters</li>
+            <li style="padding:0.3rem 0;"><span class="accent">→</span> Markdown = LLM-friendly (feed notes back to Claude)</li>
+            <li style="padding:0.3rem 0;"><span class="accent">→</span> Local-first, company-owned</li>
+          </ul>
+          <div class="callout" style="margin-top:1rem; font-size:0.88rem;">
+            Interns can see each other's folders — cross-pollination happens naturally. Learning from adjacent sessions, not just lectures.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 5: Daily Session Log -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>The Session Log — As a Conversation</h2>
+      <p class="muted">Not a form to fill in. A 5-minute chat with Claude that writes the log for you.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-top:0.8rem; align-items:start;">
+        <div>
+          <h3>How it works</h3>
+          <div class="flywheel" style="gap:0.4rem;">
+            <div class="flywheel-step">
+              <span class="flywheel-num">1</span>
+              <span class="flywheel-text" style="font-size:0.88rem;">Intern runs <span class="mono accent">/intern-log</span> at end of session</span>
+            </div>
+            <div class="flywheel-step">
+              <span class="flywheel-num">2</span>
+              <span class="flywheel-text" style="font-size:0.88rem;">Claude asks: <em>"What did you work on today?"</em> — back and forth, natural conversation</span>
+            </div>
+            <div class="flywheel-step">
+              <span class="flywheel-num">3</span>
+              <span class="flywheel-text" style="font-size:0.88rem;">Probes deeper: dead ends, what surprised you, how are you feeling about the task</span>
+            </div>
+            <div class="flywheel-step">
+              <span class="flywheel-num">4</span>
+              <span class="flywheel-text" style="font-size:0.88rem;">Writes structured log to vault automatically — nothing to format</span>
+            </div>
+            <div class="flywheel-step" style="border-left:3px solid var(--success); background:rgba(34,197,94,0.08);">
+              <span class="flywheel-num success">⚡</span>
+              <span class="flywheel-text success" style="font-size:0.88rem;"><strong>Hooks</strong> can auto-trigger this when Claude Code closes — zero friction</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3>Why conversation beats form</h3>
+          <div class="card" style="margin-bottom:0.6rem;">
+            <p style="font-size:0.85rem;"><strong>Forms get skipped.</strong> Conversations don't feel like admin — they feel like a debrief.</p>
+          </div>
+          <div class="card">
+            <p style="font-size:0.85rem;"><strong>Claude draws out more.</strong> It can ask follow-ups, spot things the intern glossed over, and prompt for the dead ends they forgot to mention.</p>
+          </div>
+          <div class="callout" style="margin-top:0.6rem; font-size:0.82rem;">
+            Same output — structured log in the vault — but the intern actually wants to do it.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 6: CRISPY Methodology -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Component 2: CRISPY Methodology</h2>
+      <p class="muted">Structured problem-solving before a single line of code</p>
+      <table style="margin-top:0.8rem;">
+        <thead>
+          <tr><th>Phase</th><th>What happens</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono accent">C — Clarify</td><td>State the problem. Constraints. What does success look like?</td></tr>
+          <tr><td class="mono accent">R — Research</td><td>Investigate the codebase, existing patterns, relevant docs — before building</td></tr>
+          <tr><td class="mono accent">I — Identify</td><td>List approaches. Pick one. State why.</td></tr>
+          <tr><td class="mono accent">S — Structure</td><td>Break implementation into testable vertical slices. Identify risks.</td></tr>
+          <tr><td class="mono accent">P — Produce</td><td>Build it. Follow the plan.</td></tr>
+          <tr><td class="mono accent">Y — Yield</td><td>Review. Does it match success criteria? What was learned?</td></tr>
+        </tbody>
+      </table>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:0.8rem;">
+        <div class="card danger-border" style="font-size:0.88rem;">
+          <h3 class="danger">Without CRISPY</h3>
+          <p>Prompt → paste → hope → wonder why it broke</p>
+        </div>
+        <div class="card success-border" style="font-size:0.88rem;">
+          <h3 class="success">With CRISPY</h3>
+          <p>Understand → research → plan → build → verify</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 7: Oversight Layer -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Component 3: Oversight Layer</h2>
+      <p class="muted">Git tells you everything — read it actively</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:0.8rem; align-items:start;">
+        <div>
+          <h3>The Cadence</h3>
+          <div class="flywheel">
+            <div class="flywheel-step">
+              <span class="flywheel-num">D</span>
+              <span class="flywheel-text"><strong>Daily (async)</strong> — Push by end of day, even WIP. Short Slack standup.</span>
+            </div>
+            <div class="flywheel-step">
+              <span class="flywheel-num">W</span>
+              <span class="flywheel-text"><strong>Weekly (30 min)</strong> — Review git activity, walk a CRISPY artifact, promote research to Shared/.</span>
+            </div>
+            <div class="flywheel-step">
+              <span class="flywheel-num">M</span>
+              <span class="flywheel-text"><strong>Monthly</strong> — Retrospective. Promote patterns to Company/Standards/.</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3>Manager Heuristics</h3>
+          <table>
+            <thead><tr><th>Signal</th><th class="success">Green</th><th class="danger">Red</th></tr></thead>
+            <tbody>
+              <tr><td>Commits</td><td class="success" style="font-size:0.85rem;">Small, frequent</td><td class="danger" style="font-size:0.85rem;">2+ days silent</td></tr>
+              <tr><td>Messages</td><td class="success" style="font-size:0.85rem;">Descriptive</td><td class="danger" style="font-size:0.85rem;">"stuff" / "wip"</td></tr>
+              <tr><td>Session logs</td><td class="success" style="font-size:0.85rem;">Written daily</td><td class="danger" style="font-size:0.85rem;">Missing</td></tr>
+              <tr><td>Research phase</td><td class="success" style="font-size:0.85rem;">Notes in vault</td><td class="danger" style="font-size:0.85rem;">Skipped to code</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 8: Skill Development -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Component 4: Skill Development</h2>
+      <p class="muted">Week 1 before touching any code</p>
+      <div class="card-grid" style="grid-template-columns: repeat(2,1fr); margin-top:0.8rem;">
+        <div class="card">
+          <h3>AI Foundations</h3>
+          <p style="font-size:0.88rem;">How LLMs work (enough to avoid blind trust). Claude Code vs ChatGPT. When <em>not</em> to use AI.</p>
+        </div>
+        <div class="card">
+          <h3>Prompting for Code</h3>
+          <p style="font-size:0.88rem;"><strong>Context → Task → Constraints → Verification.</strong> Four-part structure. Every time.</p>
+        </div>
+        <div class="card">
+          <h3>AI Hygiene</h3>
+          <p style="font-size:0.88rem;">Always verify output. Read what Claude writes. Commit messages prove you understood the change.</p>
+        </div>
+        <div class="card">
+          <h3>Knowledge Contribution</h3>
+          <p style="font-size:0.88rem;">The social contract: if you discover something useful, share it. This isn't optional — it's how the team compounds.</p>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-top:0.8rem; align-items:start;">
+        <div>
+          <h3 style="margin-bottom:0.4rem;">Recommended skills</h3>
+          <div class="pills" style="flex-wrap:wrap;">
+            <span class="pill">CRISPY</span>
+            <span class="pill">Research</span>
+            <span class="pill">_DEBUG</span>
+            <span class="pill">_REVIEW</span>
+            <span class="pill">ExtractWisdom</span>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom:0.4rem;">Hooks — the automation layer</h3>
+          <div class="card" style="font-size:0.85rem;">
+            <p>Claude Code hooks let you auto-trigger actions at session events. Use them to:</p>
+            <ul style="list-style:none; margin-top:0.4rem;">
+              <li style="padding:0.15rem 0;"><span class="accent">→</span> Auto-run <span class="mono">/intern-log</span> when session ends</li>
+              <li style="padding:0.15rem 0;"><span class="accent">→</span> Remind to push to git before closing</li>
+              <li style="padding:0.15rem 0;"><span class="accent">→</span> Auto-load team CLAUDE.md context on session start</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 9: The Flywheel -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>The Flywheel</h2>
+      <p class="muted">When all four components work together, intelligence compounds</p>
+      <div class="flywheel" style="margin-top:1rem;">
+        <div class="flywheel-step">
+          <span class="flywheel-num">1</span>
+          <span class="flywheel-text">Intern uses CRISPY → structured work → quality output</span>
+        </div>
+        <div class="flywheel-step">
+          <span class="flywheel-num">2</span>
+          <span class="flywheel-text">Session log captures what was learned → goes into personal folder</span>
+        </div>
+        <div class="flywheel-step">
+          <span class="flywheel-num">3</span>
+          <span class="flywheel-text">Best insights promoted to Shared/ → benefit the whole cohort</span>
+        </div>
+        <div class="flywheel-step">
+          <span class="flywheel-num">4</span>
+          <span class="flywheel-text">Manager reviews git + vault weekly → catches issues early, reinforces patterns</span>
+        </div>
+        <div class="flywheel-step">
+          <span class="flywheel-num">5</span>
+          <span class="flywheel-text">Next cohort onboards to a vault full of patterns, dead ends, and institutional knowledge</span>
+        </div>
+        <div class="flywheel-step" style="border-left: 3px solid var(--success); background: rgba(34,197,94,0.08);">
+          <span class="flywheel-num success">∞</span>
+          <span class="flywheel-text success"><strong>Company accumulates intelligence instead of watching it walk out the door</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 10: Week 1 Checklist -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Getting Started: Week 1</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:0.8rem; align-items:start;">
+        <div>
+          <h3>Manager</h3>
+          <ul style="list-style:none; font-size:0.9rem;">
+            <li style="padding:0.3rem 0;"><span class="accent">□</span> Obsidian vault in a Git repo</li>
+            <li style="padding:0.3rem 0;"><span class="accent">□</span> Folder structure per intern + Shared/ + Company/</li>
+            <li style="padding:0.3rem 0;"><span class="accent">□</span> Onboarding guide in Company/Onboarding/</li>
+            <li style="padding:0.3rem 0;"><span class="accent">□</span> PR + commit conventions documented</li>
+            <li style="padding:0.3rem 0;"><span class="accent">□</span> Weekly 30-min review scheduled</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Each Intern</h3>
+          <ul style="list-style:none; font-size:0.9rem;">
+            <li style="padding:0.3rem 0;"><span class="accent">□</span> Clone vault, set up Obsidian</li>
+            <li style="padding:0.3rem 0;"><span class="accent">□</span> Read onboarding guide + CRISPY</li>
+            <li style="padding:0.3rem 0;"><span class="accent">□</span> Session log every day (no exceptions)</li>
+            <li style="padding:0.3rem 0;"><span class="accent">□</span> Clarify + Research phases before touching code</li>
+            <li style="padding:0.3rem 0;"><span class="accent">□</span> Push to git every day</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:1rem; font-size:0.9rem;">
+        Questions get written down — ask Claude first, escalate to manager with context. The writing-down part is not optional.
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 11: ROI -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>The Return on Investment</h2>
+      <div class="roi-grid">
+        <div class="roi-box cost-box">
+          <h3 class="danger">Cost</h3>
+          <ul>
+            <li>~1 hour setup (vault + structure)</li>
+            <li>5 min/day per intern (session log)</li>
+            <li>30 min/week (manager review)</li>
+            <li>Week 1 AI foundations time</li>
+          </ul>
+        </div>
+        <div class="roi-box return-box">
+          <h3 class="success">Return</h3>
+          <ul>
+            <li>Managers know what's happening without micromanaging</li>
+            <li>Mistakes caught at day 3, not week 6</li>
+            <li>Research compounds instead of evaporating</li>
+            <li>Each cohort starts smarter than the last</li>
+            <li>Interns produce work they can actually explain</li>
+            <li>Company builds genuine AI capability, not AI dependency</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:1rem; font-size:0.9rem;">
+        The cost is low. The asymmetry is enormous. The main risk is not implementing it and watching it happen by accident.
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 12: Summary -->
+  <section class="slide">
+    <div class="slide-inner" style="text-align:center;">
+      <h2>ATLAS in One Page</h2>
+      <div class="summary-list" style="text-align:left; margin-top:1rem;">
+        <div class="summary-item">
+          <span class="summary-icon accent">📁</span>
+          <span class="summary-text"><strong>Shared Obsidian vault</strong> — per-person folders, shared research layer, Git-backed. Knowledge stays when interns leave.</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-icon accent">⚙️</span>
+          <span class="summary-text"><strong>CRISPY methodology</strong> — Clarify, Research, Identify, Structure, Produce, Yield. Think before building.</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-icon accent">🔍</span>
+          <span class="summary-text"><strong>Git as oversight</strong> — daily pushes, weekly 30-min review. Catch wrong directions early, not late.</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-icon accent">🧠</span>
+          <span class="summary-text"><strong>AI skill development</strong> — foundations week 1, prompting standards, hygiene, knowledge contribution social contract.</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-icon success">∞</span>
+          <span class="summary-text"><strong>The flywheel</strong> — structure → capture → share → compound. Each cohort smarter than the last.</span>
+        </div>
+      </div>
+      <div class="pills" style="justify-content:center; margin-top:1.5rem;">
+        <span class="pill" style="font-size:0.9rem; padding: 0.4rem 1rem;">ATLAS — AI Team Learning and Accountability System</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Navigation -->
+<button class="nav-btn" id="prev-btn">← Prev</button>
+<button class="nav-btn" id="next-btn">Next →</button>
+<div id="dots"></div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  const dotsEl = document.getElementById('dots');
+  let current = 0;
+  const total = slides.length;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(dot);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotsEl.children[current].classList.remove('active');
+    current = Math.max(0, Math.min(n, total - 1));
+    slides[current].classList.add('active');
+    dotsEl.children[current].classList.add('active');
+    counter.textContent = (current + 1) + ' / ' + total;
+  }
+
+  document.getElementById('prev-btn').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('next-btn').addEventListener('click', () => goTo(current + 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+  });
+</script>
+
+</body>
+</html>
