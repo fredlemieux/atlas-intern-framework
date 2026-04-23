@@ -35,6 +35,7 @@ Trigger: `/crispy` or `/crispy task-name`
 | `/review` | When reviewing code quality |
 | `/daybook` | At the end of every session (mandatory) |
 | `/retrospective` | Weekly progress review |
+| `/sensei` | Opt-in learning mode — guides rather than answers (recommended for first few weeks) |
 
 ## Vault Path
 
