@@ -2,6 +2,8 @@
 # ATLAS setup script
 # Prompts for your name and vault location, creates your intern folder,
 # installs skills to ~/.claude/skills/, and saves config to ~/.claude/.env
+#
+# Prerequisites: Claude Code installed (see setup/TOOLS.md), gh CLI installed
 
 set -euo pipefail
 

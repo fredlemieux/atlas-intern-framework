@@ -23,11 +23,9 @@ Follow the prompts to authenticate with your GitHub account.
 
 ## Claude Code
 
-```bash
-npm install -g @anthropic-ai/claude-code
-```
+Install from the official page: **https://claude.ai/code**
 
-Verify installation:
+Follow the instructions for your OS. Once installed, verify:
 
 ```bash
 claude --version

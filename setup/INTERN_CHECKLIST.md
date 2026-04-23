@@ -4,14 +4,13 @@ Your setup tasks and daily habits from day one.
 
 ## Day 1 Setup
 
-- [ ] Clone the repo and run `./scripts/install.sh`
 - [ ] Install all tools (see `TOOLS.md`)
-- [ ] Set up Obsidian -- open `vault/` as a vault
-- [ ] Create your personal folder: `cp -r vault/Interns/_TEMPLATE vault/Interns/YourName`
+- [ ] Clone this repo and run `./scripts/install.sh` — it sets up your vault, installs skills, and saves your config
+- [ ] Open your vault in Obsidian
 - [ ] Read `Company/Onboarding/WELCOME.md`
-- [ ] Read `CLAUDE.md` in the repo root -- this is how Claude behaves when you work
+- [ ] Review `CLAUDE.template.md` — this is how Claude behaves when you work (install.sh copies it to your project)
 - [ ] Run `gh auth login`
-- [ ] Run `claude` in the repo root -- verify it loads and responds
+- [ ] Run `claude` in your project repo — verify it loads and responds
 
 ## Day 2-5: First Task
 
