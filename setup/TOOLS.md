@@ -23,23 +23,30 @@ Follow the prompts to authenticate with your GitHub account.
 
 ## Claude Code
 
-Install from the official page: **https://claude.ai/code**
+**macOS / Linux:**
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
 
-Follow the instructions for your OS. Once installed, verify:
+**macOS (Homebrew):**
+```bash
+brew install --cask claude-code
+```
+> Note: Homebrew does not auto-update. Run `brew upgrade claude-code` periodically.
 
+**Windows (PowerShell):**
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+Verify installation:
 ```bash
 claude --version
 ```
 
-You need an Anthropic API key. Set it as an environment variable:
+You'll be prompted to log in on first use (requires a Claude account). Then run `claude` in any project repo to start a session — it automatically reads `CLAUDE.md` in the repo root.
 
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-```
-
-Add this to your shell profile (`~/.zshrc` or `~/.bashrc`) so it persists across sessions.
-
-Then run `claude` in any repo to start a session. Claude automatically reads `CLAUDE.md` in the repo root.
+> Full docs: https://code.claude.com/docs/en/overview
 
 ## Obsidian
 
