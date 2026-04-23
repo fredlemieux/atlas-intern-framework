@@ -37,7 +37,7 @@ Open `index.html` locally to view without deploying.
 │   ├── crispy/                 # Structured problem-solving
 │   ├── debug/                  # Systematic debugging
 │   ├── review/                 # Code review pipeline
-│   ├── intern-log/             # End-of-session logging
+│   ├── daybook/                # End-of-session logging
 │   └── retrospective/          # Weekly/monthly progress reports
 └── scripts/
     └── install.sh              # One-shot setup script
@@ -50,6 +50,18 @@ Open `index.html` locally to view without deploying.
 3. Follow `setup/SETUP.md` for the full walkthrough
 
 See `setup/MANAGER_CHECKLIST.md` and `setup/INTERN_CHECKLIST.md` for week 1 priorities.
+
+## Contributing
+
+ATLAS improves through real-world use. If you've run an intern cohort with it, found gaps, or built extensions — PRs and issues are very welcome.
+
+Ideas worth contributing:
+- Additional skill variants (onboarding, code-review, standup)
+- Vault template improvements
+- Language/tool-specific CRISPY conventions
+- Hook configurations for auto-triggering daybook
+
+Fork it, try it, improve it.
 
 ## License
 

@@ -1,5 +1,5 @@
 ---
-name: intern-log
+name: daybook
 description: End-of-session conversational logger. Run at the end of every working session to capture what was done, learned, and planned.
 ---
 
@@ -7,7 +7,7 @@ description: End-of-session conversational logger. Run at the end of every worki
 
 ## Trigger
 
-`/intern-log`
+`/daybook`
 
 ## Purpose
 
@@ -89,7 +89,7 @@ To automatically prompt for a session log when Claude Code exits, add a hook to 
     "Stop": [
       {
         "type": "command",
-        "command": "echo 'Remember to run /intern-log before closing!'"
+        "command": "echo 'Remember to run /daybook before closing!'"
       }
     ]
   }

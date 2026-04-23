@@ -33,7 +33,7 @@ Trigger: `/crispy` or `/crispy task-name`
 | `/crispy` | Before any non-trivial implementation task |
 | `/debug` | When encountering a bug or unexpected behavior |
 | `/review` | When reviewing code quality |
-| `/intern-log` | At the end of every session (mandatory) |
+| `/daybook` | At the end of every session (mandatory) |
 | `/retrospective` | Weekly progress review |
 
 ## Vault Path
@@ -52,7 +52,7 @@ Scratchpad (dead ends, experiments) goes in `./vault/Interns/{YOUR_NAME}/Scratch
 
 ## Session Log Rule
 
-Run `/intern-log` at the end of every working session. No exceptions. This is how your manager knows what you worked on, what you got stuck on, and what you plan to do next.
+Run `/daybook` at the end of every working session. No exceptions. This is how your manager knows what you worked on, what you got stuck on, and what you plan to do next.
 
 ## Commit Message Standards
 

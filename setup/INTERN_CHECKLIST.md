@@ -17,7 +17,7 @@ Your setup tasks and daily habits from day one.
 
 - [ ] Read the CRISPY methodology (`/crispy` in Claude)
 - [ ] Start your first task using CRISPY -- Clarify before coding
-- [ ] Write a session log every day (`/intern-log`)
+- [ ] Write a session log every day (`/daybook`)
 - [ ] Push to git every day, even WIP
 - [ ] If you discover something useful, add it to `vault/Shared/`
 
@@ -25,7 +25,7 @@ Your setup tasks and daily habits from day one.
 
 1. **Start of day:** Review yesterday's session log, check what you planned for today
 2. **During work:** Use CRISPY for non-trivial tasks, commit frequently with descriptive messages
-3. **End of day:** Run `/intern-log`, push to git
+3. **End of day:** Run `/daybook`, push to git
 
 ## The Social Contract
 

@@ -27,7 +27,7 @@ Your `Sessions/`, `Research/`, and `Scratchpad/` folders are yours. Use them fre
 
 ## Session Logs
 
-At the end of every working session, run `/intern-log` in Claude Code. Claude will have a short conversation with you about what you worked on, then write a structured log to your `Sessions/` folder. This takes about 5 minutes and is not optional.
+At the end of every working session, run `/daybook` in Claude Code. Claude will have a short conversation with you about what you worked on, then write a structured log to your `Sessions/` folder. This takes about 5 minutes and is not optional.
 
 Your manager reads these logs. They're how the team stays aligned without micromanagement.
 

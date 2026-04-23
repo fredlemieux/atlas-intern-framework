@@ -40,7 +40,7 @@ Replace `YourName` with your actual name (e.g., `vault/Interns/Francisco`).
 
 ## 6. Set Your Name in CLAUDE.md
 
-Open `CLAUDE.md` in the repo root. The vault path section references `{YOUR_NAME}` -- Claude will use this to know where to write your session logs. When you run `/intern-log`, Claude will ask for your name if it hasn't been set.
+Open `CLAUDE.md` in the repo root. The vault path section references `{YOUR_NAME}` -- Claude will use this to know where to write your session logs. When you run `/daybook`, Claude will ask for your name if it hasn't been set.
 
 ## 7. Authenticate with GitHub
 
@@ -60,7 +60,7 @@ Run this from the repo root. Claude automatically loads `CLAUDE.md` and all inst
 
 Try these commands:
 - `/crispy` -- start a structured problem-solving session
-- `/intern-log` -- log your session (do this at the end of every day)
+- `/daybook` -- log your session (do this at the end of every day)
 - `/debug` -- systematic debugging when you hit a bug
 
 ## 9. Manager Setup (Additional Steps)
