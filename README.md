@@ -14,7 +14,7 @@ Four interlocking components:
 ## Live Slides
 
 The framework presentation is served via GitHub Pages:
-`https://{org}.github.io/atlas-intern-framework`
+**[https://fredlemieux.github.io/atlas-intern-framework](https://fredlemieux.github.io/atlas-intern-framework)**
 
 Open `index.html` locally to view without deploying.
 
