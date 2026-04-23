@@ -45,7 +45,7 @@ If yes, remind them to add it (or offer to help write the note).
 
 ### Step 4: Write the structured log
 
-Write the log to `./vault/Interns/{name}/Sessions/YYYY-MM-DD.md` with these sections:
+Write the log to `$ATLAS_VAULT_PATH/Interns/$ATLAS_USER_NAME/Sessions/YYYY-MM-DD.md` with these sections:
 
 ```markdown
 # Session Log -- YYYY-MM-DD
@@ -74,7 +74,7 @@ After writing the log:
 
 ## Notes
 
-- The intern's name should be known from their vault folder. If not, ask: "What's your name? I need it for the vault path."
+- The intern's name comes from `$ATLAS_USER_NAME` (set during install). If the env var is missing, ask: "What's your name?" and remind them to run `./scripts/install.sh`.
 - If a log already exists for today's date, append to it with a `---` separator and a timestamp.
 - Keep the tone conversational and supportive. This is a debrief, not an interrogation.
 - This skill can be auto-triggered via Claude Code hooks when a session ends. See `setup/TOOLS.md` for hook configuration.

@@ -19,19 +19,19 @@ Reads session logs and git history to produce a structured progress report. Used
 
 ### Step 1: Gather session logs
 
-Read all session logs from `./vault/Interns/{name}/Sessions/` for the relevant time period (default: past 7 days).
+Read all session logs from `$ATLAS_VAULT_PATH/Interns/$ATLAS_USER_NAME/Sessions/` for the relevant time period (default: past 7 days).
 
 If no logs exist for the period, flag this immediately -- missing logs is a signal worth surfacing.
 
 ### Step 2: Gather git history
 
-Run `git log --oneline --author="{name}" --since="7 days ago"` to see the intern's commits over the same period.
+Run `git log --oneline --author="$ATLAS_USER_NAME" --since="7 days ago"` to see the intern's commits over the same period.
 
-Also check for PRs: `git log --oneline --author="{name}" --since="7 days ago" --merges` or review open/merged PRs if using GitHub.
+Also check for PRs: `git log --oneline --author="$ATLAS_USER_NAME" --since="7 days ago" --merges` or review open/merged PRs if using GitHub.
 
 ### Step 3: Produce the report
 
-Write to `./vault/Interns/{name}/Retrospectives/YYYY-WW.md` (year-week format):
+Write to `$ATLAS_VAULT_PATH/Interns/$ATLAS_USER_NAME/Retrospectives/YYYY-WW.md` (year-week format):
 
 ```markdown
 # Retrospective -- Week WW, YYYY
@@ -95,7 +95,7 @@ When run with `--all`, produce a cohort summary:
 
 ## Notes
 
-- If the intern's name isn't known, ask for it
+- The intern's name comes from `$ATLAS_USER_NAME` (set during install). If missing, ask and remind them to run `./scripts/install.sh`
 - Week numbers use ISO format (Monday start)
 - Create the `Retrospectives/` folder if it doesn't exist
 - Previous retrospectives in the folder provide useful comparison context
