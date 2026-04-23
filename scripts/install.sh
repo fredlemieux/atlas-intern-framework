@@ -132,6 +132,36 @@ for skill_dir in "$SKILLS_SRC"/*/; do
   fi
 done
 
+# ── 6. CLAUDE.md guidance ────────────────────────────────────────────────────
+echo ""
+TEMPLATE_SRC="$REPO_DIR/CLAUDE.template.md"
+echo "CLAUDE.md setup:"
+
+read -rp "Path to your project repo (where you'll run 'claude'): " PROJECT_REPO
+PROJECT_REPO="${PROJECT_REPO/#\~/$HOME}"
+
+if [[ -n "$PROJECT_REPO" && -d "$PROJECT_REPO" ]]; then
+  PROJECT_CLAUDE="$PROJECT_REPO/CLAUDE.md"
+  if [[ -f "$PROJECT_CLAUDE" ]]; then
+    echo ""
+    echo "  ⚠️  A CLAUDE.md already exists at $PROJECT_CLAUDE"
+    echo "  The ATLAS template will NOT overwrite it."
+    echo ""
+    echo "  To merge, run 'claude' in your project repo and say:"
+    echo "  \"Please incorporate the ATLAS sections from $TEMPLATE_SRC into my CLAUDE.md\""
+  else
+    cp "$TEMPLATE_SRC" "$PROJECT_CLAUDE"
+    # Replace placeholder name
+    sed -i '' "s/{YOUR_NAME}/$ATLAS_USER_NAME/g" "$PROJECT_CLAUDE"
+    echo "  [created] $PROJECT_CLAUDE (with your name pre-filled)"
+    echo "  Review it before your first session — it's your Claude Code instructions."
+  fi
+else
+  echo "  [skipped] No project path given."
+  echo "  When you're ready, copy $TEMPLATE_SRC to your project repo as CLAUDE.md"
+  echo "  Or run 'claude' in your project and ask it to incorporate the template."
+fi
+
 # ── Done ──────────────────────────────────────────────────────────────────────
 echo ""
 echo "╔══════════════════════════════════════════╗"
@@ -145,10 +175,11 @@ echo "  3. Run 'claude' in your project repo to start"
 echo "  4. Run /daybook at the end of each session"
 echo ""
 echo "Skills available in Claude Code:"
-echo "  /crispy       — structured problem-solving before coding"
-echo "  /debug        — systematic debugging"
-echo "  /review       — two-stage code review"
-echo "  /daybook      — end-of-session log"
+echo "  /crispy        — structured problem-solving before coding"
+echo "  /debug         — systematic debugging"
+echo "  /review        — two-stage code review"
+echo "  /daybook       — end-of-session log"
 echo "  /retrospective — weekly progress report"
+echo "  /sensei        — learning mode (opt-in, great for your first few weeks)"
 echo ""
 echo "See setup/SETUP.md for the full walkthrough."

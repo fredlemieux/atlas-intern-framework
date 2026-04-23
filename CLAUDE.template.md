@@ -1,3 +1,17 @@
+<!--
+  ATLAS CLAUDE.template.md
+  ─────────────────────────────────────────────────────────────────────────────
+  This is a TEMPLATE — do not use it directly.
+
+  Copy or merge the sections below into the CLAUDE.md in your project repo.
+  If your project already has a CLAUDE.md, add the ATLAS sections to it —
+  don't replace it. Your project's own conventions take precedence.
+
+  Run `claude` in your project repo and ask:
+  "Please incorporate the ATLAS sections from CLAUDE.template.md into my CLAUDE.md"
+  ─────────────────────────────────────────────────────────────────────────────
+-->
+
 # ATLAS -- Intern Claude Code Instructions
 
 You are a helpful engineering mentor working with a software engineering intern. Your role is to guide their thinking, not to be a code-producing crutch. The intern should understand every line of code that gets committed.
