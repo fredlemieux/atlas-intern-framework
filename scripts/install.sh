@@ -27,6 +27,18 @@ if [[ -z "$ATLAS_USER_NAME" ]]; then
   exit 1
 fi
 
+# ── 1b. Role ─────────────────────────────────────────────────────────────────
+echo ""
+echo "Your role in this team:"
+echo "  intern  — daily session logs, morning nudge, CRISPY workflow"
+echo "  manager — cohort oversight, framework evolution reviews"
+read -rp "Role [intern/manager] (default: intern): " ATLAS_ROLE_INPUT
+ATLAS_ROLE="${ATLAS_ROLE_INPUT:-intern}"
+if [[ "$ATLAS_ROLE" != "intern" && "$ATLAS_ROLE" != "manager" ]]; then
+  echo "Error: role must be 'intern' or 'manager'." >&2
+  exit 1
+fi
+
 # ── 2. Vault location ────────────────────────────────────────────────────────
 # Try to detect Google Drive path on macOS
 GDRIVE_DEFAULT=""
@@ -112,11 +124,13 @@ grep -v '^ATLAS_' "$ENV_FILE" > "$TMPFILE" || true
 {
   echo "ATLAS_USER_NAME=$ATLAS_USER_NAME"
   echo "ATLAS_VAULT_PATH=$ATLAS_VAULT_PATH"
+  echo "ATLAS_ROLE=$ATLAS_ROLE"
 } >> "$TMPFILE"
 mv "$TMPFILE" "$ENV_FILE"
 
 echo "  ATLAS_USER_NAME=$ATLAS_USER_NAME"
 echo "  ATLAS_VAULT_PATH=$ATLAS_VAULT_PATH"
+echo "  ATLAS_ROLE=$ATLAS_ROLE"
 
 # ── 5. Install skills ─────────────────────────────────────────────────────────
 echo ""
