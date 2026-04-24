@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "type": "command",
+        "command": "bash scripts/check-daybook.sh"
+      }
+    ]
+  }
+}

@@ -279,7 +279,7 @@
 </head>
 <body>
 
-<div id="counter">1 / 12</div>
+<div id="counter">1 / 13</div>
 
 <div id="deck">
 
@@ -393,8 +393,8 @@
   <!-- Slide 5: Daily Session Log -->
   <section class="slide">
     <div class="slide-inner">
-      <h2>The Session Log — As a Conversation</h2>
-      <p class="muted">Not a form to fill in. A 5-minute chat with Claude that writes the log for you.</p>
+      <h2>The Session Log — As a Reflection</h2>
+      <p class="muted">Claude already knows what happened. The daybook is about the intern's <em>perspective</em> on it.</p>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-top:0.8rem; align-items:start;">
         <div>
           <h3>How it works</h3>
@@ -405,7 +405,7 @@
             </div>
             <div class="flywheel-step">
               <span class="flywheel-num">2</span>
-              <span class="flywheel-text" style="font-size:0.88rem;">Claude asks: <em>"What did you work on today?"</em> — back and forth, natural conversation</span>
+              <span class="flywheel-text" style="font-size:0.88rem;">Claude <strong>leads</strong>: <em>"Here's what I saw us work on today…"</em> — intern confirms, adds context, flags anything missed (including work done outside Claude)</span>
             </div>
             <div class="flywheel-step">
               <span class="flywheel-num">3</span>
@@ -417,17 +417,17 @@
             </div>
             <div class="flywheel-step" style="border-left:3px solid var(--success); background:rgba(34,197,94,0.08);">
               <span class="flywheel-num success">⚡</span>
-              <span class="flywheel-text success" style="font-size:0.88rem;"><strong>Hooks</strong> can auto-trigger this when Claude Code closes — zero friction</span>
+              <span class="flywheel-text success" style="font-size:0.88rem;"><strong>Session-start hook</strong> nudges interns if yesterday's log is missing — fires once per day, not on every message</span>
             </div>
           </div>
         </div>
         <div>
-          <h3>Why conversation beats form</h3>
+          <h3>Why the flip matters</h3>
           <div class="card" style="margin-bottom:0.6rem;">
-            <p style="font-size:0.85rem;"><strong>Forms get skipped.</strong> Conversations don't feel like admin — they feel like a debrief.</p>
+            <p style="font-size:0.85rem;"><strong>Claude already knows.</strong> Asking "what did you do?" wastes the context. Leading with a summary means the intern reacts — much lower friction.</p>
           </div>
-          <div class="card">
-            <p style="font-size:0.85rem;"><strong>Claude draws out more.</strong> It can ask follow-ups, spot things the intern glossed over, and prompt for the dead ends they forgot to mention.</p>
+          <div class="card" style="margin-bottom:0.6rem;">
+            <p style="font-size:0.85rem;"><strong>Captures the full picture.</strong> The intern adds what Claude didn't see — meetings, offline research, manual testing.</p>
           </div>
           <div class="callout" style="margin-top:0.6rem; font-size:0.82rem;">
             Same output — structured log in the vault — but the intern actually wants to do it.
@@ -568,7 +568,7 @@
         </div>
         <div class="flywheel-step">
           <span class="flywheel-num">2</span>
-          <span class="flywheel-text">Session log captures what was learned → goes into personal folder</span>
+          <span class="flywheel-text">Session log reflects on what was learned → goes into personal vault folder</span>
         </div>
         <div class="flywheel-step">
           <span class="flywheel-num">3</span>
@@ -582,15 +582,64 @@
           <span class="flywheel-num">5</span>
           <span class="flywheel-text">Next cohort onboards to a vault full of patterns, dead ends, and institutional knowledge</span>
         </div>
+        <div class="flywheel-step" style="border-left: 3px solid var(--accent); background: rgba(59,130,246,0.08);">
+          <span class="flywheel-num accent">6</span>
+          <span class="flywheel-text">Genuine framework gaps surface → manager reviews → ATLAS itself improves via PRs upstream</span>
+        </div>
         <div class="flywheel-step" style="border-left: 3px solid var(--success); background: rgba(34,197,94,0.08);">
           <span class="flywheel-num success">∞</span>
-          <span class="flywheel-text success"><strong>Company accumulates intelligence instead of watching it walk out the door</strong></span>
+          <span class="flywheel-text success"><strong>Company intelligence compounds. The framework gets smarter with every cohort.</strong></span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Slide 10: Week 1 Checklist -->
+  <!-- Slide 10: Framework Evolution -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>ATLAS Evolves With You</h2>
+      <p class="muted">Every cohort improves the framework — automatically, with human review</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:0.8rem; align-items:start;">
+        <div>
+          <h3>How improvements surface</h3>
+          <div class="flywheel" style="gap:0.4rem;">
+            <div class="flywheel-step">
+              <span class="flywheel-num">1</span>
+              <span class="flywheel-text" style="font-size:0.88rem;">Daybook reflection surfaces a pattern — a guardrail that was missing, a skill that could be clearer</span>
+            </div>
+            <div class="flywheel-step">
+              <span class="flywheel-num">2</span>
+              <span class="flywheel-text" style="font-size:0.88rem;">Claude evaluates: is this genuinely additive to ATLAS, or specific to this intern/project?</span>
+            </div>
+            <div class="flywheel-step">
+              <span class="flywheel-num">3</span>
+              <span class="flywheel-text" style="font-size:0.88rem;">If genuine: <em>"This looks like an ATLAS improvement — want me to raise a PR?"</em></span>
+            </div>
+            <div class="flywheel-step">
+              <span class="flywheel-num">4</span>
+              <span class="flywheel-text" style="font-size:0.88rem;">Improvement applied to local ATLAS instance immediately. Manager reviews before anything merges upstream.</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3>Role-aware behaviour</h3>
+          <div class="card" style="margin-bottom:0.6rem;">
+            <h3>Intern</h3>
+            <p style="font-size:0.85rem;">Morning nudge if yesterday's log is missing. Daybook surfaces improvement candidates. Works from their local ATLAS instance.</p>
+          </div>
+          <div class="card">
+            <h3>Manager</h3>
+            <p style="font-size:0.85rem;">Session start shows cohort health. Reviews improvement PRs before they land upstream. Controls what propagates to the next cohort.</p>
+          </div>
+          <div class="callout" style="margin-top:0.6rem; font-size:0.82rem;">
+            Role is set once during <span class="mono">./scripts/install.sh</span>. No configuration drift.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 11: Week 1 Checklist -->
   <section class="slide">
     <div class="slide-inner">
       <h2>Getting Started: Week 1</h2>
@@ -622,7 +671,7 @@
     </div>
   </section>
 
-  <!-- Slide 11: ROI -->
+  <!-- Slide 12: ROI -->
   <section class="slide">
     <div class="slide-inner">
       <h2>The Return on Investment</h2>
@@ -654,7 +703,7 @@
     </div>
   </section>
 
-  <!-- Slide 12: Summary -->
+  <!-- Slide 13: Summary -->
   <section class="slide">
     <div class="slide-inner" style="text-align:center;">
       <h2>ATLAS in One Page</h2>
@@ -676,8 +725,12 @@
           <span class="summary-text"><strong>AI skill development</strong> — foundations week 1, prompting standards, hygiene, knowledge contribution social contract.</span>
         </div>
         <div class="summary-item">
+          <span class="summary-icon accent">🔄</span>
+          <span class="summary-text"><strong>Self-improving</strong> — daybook reflections surface genuine framework gaps. Manager reviews, local instance updates immediately, upstream PRs propagate the best ideas to the next cohort.</span>
+        </div>
+        <div class="summary-item">
           <span class="summary-icon success">∞</span>
-          <span class="summary-text"><strong>The flywheel</strong> — structure → capture → share → compound. Each cohort smarter than the last.</span>
+          <span class="summary-text"><strong>The flywheel</strong> — structure → capture → share → compound → improve. Each cohort smarter than the last, and the framework smarter too.</span>
         </div>
       </div>
       <div class="pills" style="justify-content:center; margin-top:1.5rem;">

@@ -20,13 +20,27 @@ chmod +x scripts/install.sh
 ./scripts/install.sh
 ```
 
-This copies skills to `~/.claude/skills/` and creates a local `vault/` from the template.
+The script will ask for:
+- **Your name** — used for your personal vault folder
+- **Your role** — `intern` or `manager` (controls session nudges and oversight features)
+- **Vault path** — where your shared Obsidian vault lives (see Step 4)
 
-## 4. Set Up the Vault in Obsidian
+This copies skills to `~/.claude/skills/` and saves config to `~/.claude/.env`.
 
-1. Open Obsidian
-2. Click "Open folder as vault"
-3. Select the `vault/` folder inside this repo
+## 4. Set Up the Shared Vault in Obsidian
+
+The ATLAS vault is **shared** — managers and interns all open the same Obsidian vault. This is what makes cross-pollination and async oversight work.
+
+### Manager sets up once:
+1. Create a Git repo for the vault (separate from the ATLAS framework repo)
+2. Copy `vault-template/` contents into it and push
+3. Add all interns as collaborators on the vault repo
+4. Share the vault repo URL with interns
+
+### Each person (intern and manager):
+1. Clone the vault repo to a local path (e.g. `~/Documents/team-vault` or a Google Drive sync folder)
+2. Open Obsidian → "Open folder as vault" → select that folder
+3. When the install script asks for "Vault path", point it at this cloned folder
 
 You should see the folder structure with `Interns/`, `Shared/`, and `Company/`.
 
